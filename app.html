@@ -9,38 +9,39 @@
 	<div id="app">
 		
 		<div>	
-			<h1>{{ message }}</h1>
+			<h1>{{ tituloApp }}</h1>
 		</div>
 		<hr>
 		<div id="selecao-mesa">
-			<span>Escolher a mesa: 
-				<select name="mesas" id="mesas">
-					<option v-for="mesas in numMesa">{{ mesas }}</option>
+			<span>{{ escolhaMesa }}
+				<select name="select" id="select" @change="Mesas()">
+					<option v-for="mesa in mesas.idMesa.numMesa">{{ mesa }}</option>
 				</select>
 			</span>
 		</div>
 		<div id="mostra-mesa">
 			<div>
-				<p>Produtos</p>
+				<p>{{ produtos }}</p>
 				<ul>
 					<li v-for="mesa in mesas.idMesa.consumos">{{ mesa.nome }}</li>
 				</ul>
 			</div>
 			<div>
-				<p>Quantidade</p>
+				<p>{{ quantidade }}</p>
 				<ul>
 					<li v-for="mesa in mesas.idMesa.consumos">{{ mesa.quantidade }}</li>
 				</ul>
 			</div>
 			<div>
-				<p>Valor unitário</p>
+				<p>{{ vlrUnit }}</p>
 				<ul>
 					<li v-for="mesa in mesas.idMesa.consumos">{{ mesa.valor }}</li>
 				</ul>
 			</div>
 			<div>
-				<p>Total</p>
-					<input type="number" readonly v-model="Mesa">
+				<p>{{ vlrTotal }}
+					<input type="number" readonly v-model="vlrConta" @click="MostraMesa">
+				</p>
 			</div>
 		</div>
 
@@ -52,39 +53,89 @@
 	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 
 	<script>
+
+		let mesas = {
+			
+			idMesa: {
+				consumos: [
+				    {
+				        nome: 'suco maracujá',
+				        quantidade: 1,
+				        valor: 5.50
+				    },
+				    {
+				        nome: 'guaraná coca-cola',
+				        quantidade: 1,
+				        valor: 3.00
+				    },
+				    {
+				       	nome: 'feijoada',
+				        quantidade: 2,
+				        valor: 12.00
+				    }
+				],
+				numMesa: 10
+			},
+
+			idMesa: {
+				consumos: [
+				    {
+				        nome: 'água',
+				        quantidade: 2,
+				        valor: 2.50
+				    },
+				    {
+				        nome: 'guaraná fanta-uva',
+				        quantidade: 2,
+				        valor: 3.00
+				    },
+				    {
+				       	nome: 'porção de frios',
+				        quantidade: 2,
+				        valor: 23.50
+				    }
+				],
+				numMesa: 2
+			},
+
+			idMesa: {
+				consumos: [
+				    {
+				        nome: 'cerveja brahma',
+				        quantidade: 3,
+				        valor: 2.50
+				    },
+				    {
+				        nome: 'guaraná sprite',
+				        quantidade: 2,
+				        valor: 3.00
+				    },
+				    {
+				       	nome: 'pizza mussarela',
+				        quantidade: 1,
+				        valor: 23.50
+				    }
+				],
+				numMesa: 3
+			} 
+		};
 		
 		let app = new Vue({
 
 			el: '#app',
 			data: {
-				message: 'Acompanhamento de mesas',
-				numMesa: ['01', '02', '03'],
-				mesas: {
-					idMesa: {
-						consumos: [
-				       		{
-				        		nome: 'suco',
-				          		quantidade: 1,
-				          		valor: 5.50
-				        	},
-				        	{
-				          		nome: 'coca',
-				          		quantidade: 1,
-				          		valor: 3.00
-				        	},
-				        	{
-				          		nome: 'feijoada',
-				          		quantidade: 2,
-				          		valor: 12.00
-				        	}
-				      	]
-				    }
-				},
-				mesaSelecionada: 'idDaMesa'
+				tituloApp: 'Acompanhamento de mesas',
+				escolhaMesa: 'Escolher a mesa',
+				produtos: 'Produtos',
+				quantidade: 'Quantidade',
+				vlrUnit: 'Valor unitário',
+				vlrTotal: 'Valor Total',
+				numMesa: '',
+				mesas: mesas
 			},
 
 			computed: {
-				Mesa() {
+				vlrConta: function() {
 					let valor1 = this.mesas.idMesa.consumos[0].valor;
 					let valor2 = this.mesas.idMesa.consumos[1].valor; 
 					let valor3 = this.mesas.idMesa.consumos[2].valor;
@@ -97,10 +148,31 @@
 					let total2 = valor2 * quant2;
 					let total3 = valor3 * quant3;
 
-					let totais = total1 + total2 + total3;
+					let vlrTotal = total1 + total2 + total3;
 
-			    	return totais;
-			  	},
+			    	return vlrTotal;
+			  	}
+			},
+
+			methods: {
+				Mesas: function() {
+					let selecao = document.getElementById('select');
+					let numMesa = selecao.options[selecao.selectedIndex].value;
+					
+					return numMesa;
+				},
+				MostraMesa: function(mesa) {
+					
+					let id = this.mesas.idMesa.numMesa;
+
+					console.log(id);
+					
+				/*	if (numMesa !== 3) {
+						console.log('certo');
+					} else {
+						console.log('errado');
+					} */
+				}
 			}
 					
 		})
