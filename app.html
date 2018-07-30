@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+	<div id="app">
+		
+		<div>	
+			<h1>{{ message }}</h1>
+		</div>
+		<hr>
+		<div id="selecao-mesa">
+			<span>Escolher a mesa: 
+				<select name="mesas" id="mesas">
+					<option v-for="mesas in numMesa">{{ mesas }}</option>
+				</select>
+			</span>
+		</div>
+		<div id="mostra-mesa">
+			<div>
+				<p>Produtos</p>
+				<ul>
+					<li v-for="mesa in mesas.idMesa.consumos">{{ mesa.nome }}</li>
+				</ul>
+			</div>
+			<div>
+				<p>Quantidade</p>
+				<ul>
+					<li v-for="mesa in mesas.idMesa.consumos">{{ mesa.quantidade }}</li>
+				</ul>
+			</div>
+		</div>
+
+
+	</div>
+
+
+	<!-- production version, optimized for size and speed -->
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+	<script>
+		
+		let app = new Vue({
+
+			el: '#app',
+			data: {
+				message: 'Acompanhamento de mesas',
+				numMesa: ['01', '02', '03'],
+				mesas: {
+					idMesa: {
+						consumos: [
+				       		{
+				        		nome: 'suco',
+				          		quantidade: 1,
+				          		valor: 5.50
+				        	},
+				        	{
+				          		nome: 'coca',
+				          		quantidade: 1,
+				          		valor: 3.00
+				        	},
+				        	{
+				          		nome: 'feijoada',
+				          		quantidade: 2,
+				          		valor: 12.00
+				        	}
+				      	]
+				    }
+				},
+				mesaSelecionada: 'idDaMesa'
+			},
+
+			computed: {
+				valorMesa () {
+			    	if (this.mesaSelecionada === '') return ''
+			    	return this.mesas[this.mesaSelecionada].consumos.reduce((total, consumo) =>  consumo.quantidade * consumo.valor)
+			  	}
+			}
+					
+		})
+	
+
+	</script>
+	
+</body>
+</html>
