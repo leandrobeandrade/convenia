@@ -32,6 +32,16 @@
 					<li v-for="mesa in mesas.idMesa.consumos">{{ mesa.quantidade }}</li>
 				</ul>
 			</div>
+			<div>
+				<p>Valor unitário</p>
+				<ul>
+					<li v-for="mesa in mesas.idMesa.consumos">{{ mesa.valor }}</li>
+				</ul>
+			</div>
+			<div>
+				<p>Total</p>
+					<input type="number" readonly v-model="Mesa">
+			</div>
 		</div>
 
 
@@ -74,10 +84,23 @@
 			},
 
 			computed: {
-				valorMesa () {
-			    	if (this.mesaSelecionada === '') return ''
-			    	return this.mesas[this.mesaSelecionada].consumos.reduce((total, consumo) =>  consumo.quantidade * consumo.valor)
-			  	}
+				Mesa() {
+					let valor1 = this.mesas.idMesa.consumos[0].valor;
+					let valor2 = this.mesas.idMesa.consumos[1].valor; 
+					let valor3 = this.mesas.idMesa.consumos[2].valor;
+
+					let quant1 = this.mesas.idMesa.consumos[0].quantidade;
+					let quant2 = this.mesas.idMesa.consumos[1].quantidade;
+					let quant3 = this.mesas.idMesa.consumos[2].quantidade;
+
+					let total1 = valor1 * quant1;
+					let total2 = valor2 * quant2;
+					let total3 = valor3 * quant3;
+
+					let totais = total1 + total2 + total3;
+
+			    	return totais;
+			  	},
 			}
 					
 		})
