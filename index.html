@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+	<div id="app">
+		
+		<div>	
+			<h1>{{ message }}</h1>
+		</div>
+		<hr>
+		<div id="selecao-mesa">
+			<span>Escolher a mesa:
+				<select @change="Mesa()" v-if="">
+					<option v-for="mesa in mesas.idMesa.numMesa">{{ mesa }}</option>
+				</select>
+			</span>
+		</div>
+		<div id="mostra-mesa">
+			<div>
+				<p>Produtos</p>
+				<ul>
+					<li v-for="mesa in mesas.idMesa.consumos">{{ mesa.nome }}</li>
+				</ul>
+			</div>
+			<div>
+				<p>Quantidade</p>
+				<ul>
+					<li v-for="mesa in mesas.idMesa.consumos">{{ mesa.quantidade }}</li>
+				</ul>
+			</div>
+			<div>
+				<p>Valor unitário</p>
+				<ul>
+					<li v-for="mesa in mesas.idMesa.consumos">{{ mesa.valor }}</li>
+				</ul>
+			</div>
+			<div>
+				<p>Total</p>
+					<input type="number" readonly>
+			</div>
+		</div>
+
+
+	</div>
+
+
+	<!-- production version, optimized for size and speed -->
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+	<script>
+
+		let mesas = {
+			
+			idMesa: {
+				consumos: [
+				    {
+				        nome: 'suco maracujá',
+				        quantidade: 1,
+				        valor: 5.50
+				    },
+				    {
+				        nome: 'coca',
+				        quantidade: 1,
+				        valor: 3.00
+				    },
+				    {
+				       	nome: 'feijoada',
+				        quantidade: 2,
+				        valor: 12.00
+				    }
+				],
+				numMesa: 1
+			},
+
+			idMesa: {
+				consumos: [
+				    {
+				        nome: 'água',
+				        quantidade: 2,
+				        valor: 2.50
+				    },
+				    {
+				        nome: 'fanta',
+				        quantidade: 2,
+				        valor: 3.00
+				    },
+				    {
+				       	nome: 'pizza',
+				        quantidade: 1,
+				        valor: 23.50
+				    }
+				],
+				numMesa: 2
+			},
+
+			idMesa: {
+				consumos: [
+				    {
+				        nome: 'cerveja brahma',
+				        quantidade: 2,
+				        valor: 2.50
+				    },
+				    {
+				        nome: 'fanta',
+				        quantidade: 2,
+				        valor: 3.00
+				    },
+				    {
+				       	nome: 'pizza mussarela',
+				        quantidade: 1,
+				        valor: 23.50
+				    }
+				],
+				numMesa: 3
+			},
+		};
+		
+		let app = new Vue({
+
+			el: '#app',
+			data: {
+				message: 'Acompanhamento de mesas',
+				numMesa: '',
+				mesas: mesas
+			},
+
+			methods: {
+				Mesa: function() {
+					let valor1 = this.mesas.idMesa.consumos[0].valor;
+					let valor2 = this.mesas.idMesa.consumos[1].valor; 
+					let valor3 = this.mesas.idMesa.consumos[2].valor;
+
+					let quant1 = this.mesas.idMesa.consumos[0].quantidade;
+					let quant2 = this.mesas.idMesa.consumos[1].quantidade;
+					let quant3 = this.mesas.idMesa.consumos[2].quantidade;
+
+					let total1 = valor1 * quant1;
+					let total2 = valor2 * quant2;
+					let total3 = valor3 * quant3;
+
+					let totais = total1 + total2 + total3;
+
+			    	return console.log(totais);
+			  	},
+			  	teste: function() {
+			  		alert('dadas');
+			  	}
+			}
+					
+		})
+	
+
+	</script>
+	
+</body>
+</html>
