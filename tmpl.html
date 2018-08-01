@@ -13,16 +13,20 @@
 		</div>
 		<hr>
 		<div id="selecao-mesa">
+
 			<span>{{ escolhaMesa }}
-				<select name="select" id="select" @change="Mesas">
+				<select name="select" id="select" v-model="numMesa">
 					<option v-for="opcao in opcoes">{{ opcao }}</option>
 				</select>
 			</span>
-		</div>											<button @click="mostrar = !mostrar">Mostrar/Esconder</button>
+
+		</div>											<!--button @click="mostrar = !mostrar">Mostrar/Esconder</button-->
 		<div id="mostra-mesa">
-				<mesa1 v-show="mostrar"></mesa1>
-				<mesa2 v-show="mostrar"></mesa2>
-				<mesa3 v-show="mostrar"></mesa3>
+
+			<mesa1 v-if="numMesa == 1"></mesa1>
+			<mesa2 v-if="numMesa == 2"></mesa2>
+			<mesa3 v-if="numMesa == 3"></mesa3>
+
 		</div>
 
 	</div>
@@ -227,23 +231,12 @@
 			data: {
 				tituloApp: 'Acompanhamento de mesas',
 				escolhaMesa: 'Escolher a mesa',
-				opcoes: [ , 1, 2, 3],
-				mostrar: false
+				opcoes: [, 1, 2, 3],
+				numMesa: false
 			},
 
 			methods: {
-				Mesas: () => {
-					let selecao = document.getElementById('select');
-					let numMesa = selecao.options[selecao.selectedIndex].value;
-
-					let opcao = this.opcoes; console.log(opcao);
-
-					return console.log(numMesa);
-				}, 
-				Teste: () => {
-					this.mostrar = !this.mostrar;
-
-				} 
+				 
 			}	
 		})
 	
