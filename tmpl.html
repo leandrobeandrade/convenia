@@ -14,21 +14,15 @@
 		<hr>
 		<div id="selecao-mesa">
 			<span>{{ escolhaMesa }}
-				<select name="select" id="select" @change="Mesas()">
-					<option v-for="option in options">{{ option }}</option>
+				<select name="select" id="select" @change="Mesas">
+					<option v-for="opcao in opcoes">{{ opcao }}</option>
 				</select>
 			</span>
-		</div>
+		</div>											<button @click="mostrar = !mostrar">Mostrar/Esconder</button>
 		<div id="mostra-mesa">
-			<div v-if="numMesa == 1">
-				<mesa1></mesa1>
-			</div>	
-			<div v-else-if="options == 2">	
-				<mesa2></mesa2>
-			</div>
-			<div v-else>
-				<mesa3></mesa3>
-			</div>
+				<mesa1 v-show="mostrar"></mesa1>
+				<mesa2 v-show="mostrar"></mesa2>
+				<mesa3 v-show="mostrar"></mesa3>
 		</div>
 
 	</div>
@@ -71,17 +65,17 @@
 			consumo: [
 				{
 					nome: 'água',
-					quantidade: 2,
+					quant: 2,
 					valor: 2.50
 				},
 				{
 					nome: 'guaraná fanta-uva',
-					quantidade: 2,
+					quant: 2,
 					valor: 3.00
 				},
 				{
 					nome: 'porção de frios',
-					quantidade: 2,
+					quant: 2,
 					valor: 23.50
 				}
 			],
@@ -89,20 +83,20 @@
 		};
 
 		let mesa3 = {
-			consumos: [
+			consumo: [
 				{
 				    nome: 'cerveja brahma',
-				   	quantidade: 2,
+				   	quant: 2,
 				    valor: 2.50
 				},
 				{
 				    nome: 'fanta',
-				    quantidade: 2,
+				    quant: 2,
 				    valor: 3.00
 				},
 				{
 				    nome: 'pizza mussarela',
-				    quantidade: 1,
+				    quant: 1,
 				    valor: 23.50
 				}
 			],
@@ -114,7 +108,7 @@
 							<p>{{ quantidade }}</p><ul><li v-for="quantidades in mesa1.consumo">{{ quantidades.quant }}</li></ul>
 							<p>{{ vlrUnit }}</p><ul><li v-for="valores in mesa1.consumo">{{ valores.valor }}</li></ul>
 							<p>{{ vlrParcial }}:<input type="number" v-model="vlrParcialConta"></p>
-							<p>{{ vlrTotal }}:<input type="number" readonly v-model="vlrConta"></p>
+							<p>{{ vlrTotal }}:<input type="number" readonly v-model="vlrConta"></p><hr />
 						</div>`,
 			
 			data: () => {
@@ -142,8 +136,86 @@
 			  	vlrParcialConta: () => {
 			  		let valorParcial = 10; 
 
-			  		console.log(valorParcial - this.valorTotal);
-			  	}
+			  		return valorParcial - this.valorTotal;
+			  	} 
+			}
+
+        })
+
+        Vue.component('mesa2',{
+        	template: 	`<div><p>{{ produtos }}</p><ul><li v-for="nomes in mesa2.consumo">{{ nomes.nome }}</li></ul>
+							<p>{{ quantidade }}</p><ul><li v-for="quantidades in mesa2.consumo">{{ quantidades.quant }}</li></ul>
+							<p>{{ vlrUnit }}</p><ul><li v-for="valores in mesa2.consumo">{{ valores.valor }}</li></ul>
+							<p>{{ vlrParcial }}:<input type="number" v-model="vlrParcialConta"></p>
+							<p>{{ vlrTotal }}:<input type="number" readonly v-model="vlrConta"></p><hr />
+						</div>`,
+			
+			data: () => {
+				return mesa2;
+			},
+
+			computed: {
+				vlrConta: () => {
+					let valor1 = mesa2.consumo[0].valor;
+					let valor2 = mesa2.consumo[1].valor; 
+					let valor3 = mesa2.consumo[2].valor;
+
+					let quant1 = mesa2.consumo[0].quant;
+					let quant2 = mesa2.consumo[1].quant;
+					let quant3 = mesa2.consumo[2].quant;
+
+					let total1 = valor1 * quant1;
+					let total2 = valor2 * quant2;
+					let total3 = valor3 * quant3;
+
+					let valorTotal = total1 + total2 + total3;
+
+			    	return valorTotal;
+			  	},
+			  	vlrParcialConta: () => {
+			  		let valorParcial = 10; 
+
+			  		return valorParcial - this.valorTotal;
+			  	} 
+			}
+
+        })
+
+        Vue.component('mesa3',{
+        	template: 	`<div><p>{{ produtos }}</p><ul><li v-for="nomes in mesa3.consumo">{{ nomes.nome }}</li></ul>
+							<p>{{ quantidade }}</p><ul><li v-for="quantidades in mesa3.consumo">{{ quantidades.quant }}</li></ul>
+							<p>{{ vlrUnit }}</p><ul><li v-for="valores in mesa3.consumo">{{ valores.valor }}</li></ul>
+							<p>{{ vlrParcial }}:<input type="number" v-model="vlrParcialConta"></p>
+							<p>{{ vlrTotal }}:<input type="number" readonly v-model="vlrConta"></p>
+						</div>`,
+			
+			data: () => {
+				return mesa3;
+			},
+
+			computed: {
+				vlrConta: () => {
+					let valor1 = mesa3.consumo[0].valor;
+					let valor2 = mesa3.consumo[1].valor; 
+					let valor3 = mesa3.consumo[2].valor;
+
+					let quant1 = mesa3.consumo[0].quant;
+					let quant2 = mesa3.consumo[1].quant;
+					let quant3 = mesa3.consumo[2].quant;
+
+					let total1 = valor1 * quant1;
+					let total2 = valor2 * quant2;
+					let total3 = valor3 * quant3;
+
+					let valorTotal = total1 + total2 + total3;
+
+			    	return valorTotal;
+			  	},
+			  	vlrParcialConta: () => {
+			  		let valorParcial = 10; 
+
+			  		return valorParcial - this.valorTotal;
+			  	} 
 			}
 
         })
@@ -155,7 +227,8 @@
 			data: {
 				tituloApp: 'Acompanhamento de mesas',
 				escolhaMesa: 'Escolher a mesa',
-				options: [, 1, 2, 3]
+				opcoes: [ , 1, 2, 3],
+				mostrar: false
 			},
 
 			methods: {
@@ -163,8 +236,14 @@
 					let selecao = document.getElementById('select');
 					let numMesa = selecao.options[selecao.selectedIndex].value;
 
-					return numMesa;
-				}
+					let opcao = this.opcoes; console.log(opcao);
+
+					return console.log(numMesa);
+				}, 
+				Teste: () => {
+					this.mostrar = !this.mostrar;
+
+				} 
 			}	
 		})
 	
