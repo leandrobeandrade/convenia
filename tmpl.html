@@ -47,6 +47,7 @@
 		let vlrParcial = 'Valor Parcial'
 		let vlrTotal = 'Valor Total';
 		let numMesa = '';
+		let valorTotal = 10;
 
 		let mesa1 = {
 			consumo: [
@@ -115,7 +116,7 @@
         	template: 	`<div><p>{{ produtos }}</p><ul><li v-for="nomes in mesa1.consumo">{{ nomes.nome }}</li></ul>
 							<p>{{ quantidade }}</p><ul><li v-for="quantidades in mesa1.consumo">{{ quantidades.quant }}</li></ul>
 							<p>{{ vlrUnit }}</p><ul><li v-for="valores in mesa1.consumo">{{ valores.valor }}</li></ul>
-							<p>{{ vlrParcial }}&nbsp;<input type="number" @blur="alert($event.target.value)"></p>
+							<p>{{ vlrParcial }}&nbsp;<input type="number" @blur="teste($event.target.value)"></p>
 							<p>{{ vlrTotal }}&nbsp;<input type="number" readonly v-model="vlrConta"></p><hr/>
 						</div>`,
 			
@@ -140,6 +141,17 @@
 					let valorTotal= (total1 + total2 + total3).toFixed(2);
 
 			    	return valorTotal;
+			  	}
+			},
+
+			methods: {
+				teste: (valor) => {
+
+			  		let valortotal = valorTotal; 
+
+			  		console.log(valortotal -  valor);
+
+			  		
 			  	}
 			}
 
