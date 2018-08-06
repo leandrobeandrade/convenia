@@ -15,7 +15,9 @@
 		.mesa-content{width: 25%;}
 		p{background-color: #000;color: #fff;padding: 20px;line-height: 35px;}		
 		ul li{list-style: none;line-height: 35px;} 
-		input{width: 60px;height: 25px;border: 1px solid #fff; border-radius: 2px}
+		input[type=checkbox]{width: 17px;height: 17px;}
+		input[type="checkbox"]:checked:before{background-color: red;}
+		input[type=number]{width: 60px;height: 25px;border: 1px solid #fff; border-radius: 2px}
 
 	</style>
 
@@ -47,8 +49,6 @@
 
 	<!-- production version, optimized for size and speed -->
 	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-	<!-- currency para moedas -->
-	<script src="https://cdn.rawgit.com/chrisvfritz/5f0a639590d6e648933416f90ba7ae4e/raw/974aa47f8f9c5361c5233bd56be37db8ed765a09/currency-validator.js"></script>
 
 	<script>
 		
@@ -59,6 +59,7 @@
 		let desconto = 'Valor de desconto'
 		let vlrTotal = 'Valor Total';
 		let numMesa = '';
+		let mostrarTotal = 'Descontar valor separadamente';
 
 		let mesa1 = {
 			consumo: [
@@ -79,7 +80,8 @@
 				}
 			],
 			numMesa: 1,
-			total: 0
+			total: 0,
+			mostrar: false
 		};
 
 		let mesa2 = {
@@ -132,8 +134,9 @@
 							<div class="mesa-content"><p>{{ quantidade }}</p><ul><li v-for="quantidades in mesa1.consumo">{{ quantidades.quant }}</li></ul></div>
 							<div class="mesa-content"><p>{{ vlrUnit }}</p><ul><li v-for="valores in mesa1.consumo">{{ valores.valor.toFixed(2) }}</li></ul></div>
 							<div class="mesa-content"><p>{{ vlrParcial }}</p><p>{{ valor_Parcial }}</p>
-							<p>{{ desconto }} &nbsp; <input type="number" v-model="total" @keyup="total" @focus="selecao"></p>
-							<p>{{ vlrTotal }} &nbsp; {{ valor_Parcial - total }}</p><div>
+							<p><input type="checkbox" id="check" v-model="mostrar"><label for="check" v-model="mostrar"> &nbsp; {{ mostrarTotal }}</label></p>
+							<p v-if="mostrar">{{ desconto }} &nbsp; <input v-model.number="total" @keyup="total" @focus="selecao"></p>
+							<p v-if="mostrar">{{ vlrTotal }} &nbsp; {{ valor_Parcial - total }}</p><div>
 						</div>`,
 			
 			data: () => {
