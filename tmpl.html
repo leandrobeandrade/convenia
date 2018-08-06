@@ -7,7 +7,16 @@
 <body>
 
 	<style>
-		ul li{list-style:none;}
+		body{margin: 0;padding: 0;max-width: 100%;}
+		h1{text-align: center;}
+		*:focus{outline: none;}
+		select{width: 150px;height: 35px;border-radius: 4px;background-color: #fff;cursor: pointer;}
+		.mesa{width: 100%;display: flex;flex-direction: row; flex-wrap: wrap;justify-content: space-between;align-items: baseline;}
+		.mesa-content{width: 25%;}
+		p{background-color: #000;color: #fff;padding: 20px;line-height: 35px;}		
+		ul li{list-style: none;line-height: 35px;} 
+		input{width: 60px;height: 25px;border: 1px solid #fff; border-radius: 2px}
+
 	</style>
 
 	<div id="app">
@@ -18,13 +27,13 @@
 		<hr>
 		<div id="selecao-mesa">
 
-			<span>{{ escolhaMesa }}
+			<h3>{{ escolhaMesa }}
 				<select name="select" id="select" v-model="numMesa">
 					<option v-for="opcao in opcoes">{{ opcao }}</option>
 				</select>
-			</span>
+			</h3>
 
-		</div>											<!--button @click="mostrar = !mostrar">Mostrar/Esconder</button-->
+		</div>
 		<div id="mostra-mesa">
 
 			<mesa1 v-if="numMesa == 1"></mesa1>
@@ -38,6 +47,8 @@
 
 	<!-- production version, optimized for size and speed -->
 	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<!-- currency para moedas -->
+	<script src="https://cdn.rawgit.com/chrisvfritz/5f0a639590d6e648933416f90ba7ae4e/raw/974aa47f8f9c5361c5233bd56be37db8ed765a09/currency-validator.js"></script>
 
 	<script>
 		
@@ -45,9 +56,9 @@
 		let quantidade = 'Quantidade';
 		let vlrUnit = 'Valor unitário';
 		let vlrParcial = 'Valor Parcial'
+		let desconto = 'Valor de desconto'
 		let vlrTotal = 'Valor Total';
 		let numMesa = '';
-		let valorTotal = 10;
 
 		let mesa1 = {
 			consumo: [
@@ -67,7 +78,8 @@
 					valor: 12.00
 				}
 			],
-			numMesa: 1
+			numMesa: 1,
+			total: 0
 		};
 
 		let mesa2 = {
@@ -88,7 +100,8 @@
 					valor: 23.50
 				}
 			],
-			numMesa: 2
+			numMesa: 2,
+			total: 0
 		};
 
 		let mesa3 = {
@@ -109,15 +122,18 @@
 				    valor: 23.50
 				}
 			],
-			numMesa: 3
+			numMesa: 3,
+			total: 0
 		}
 
         Vue.component('mesa1',{
-        	template: 	`<div><p>{{ produtos }}</p><ul><li v-for="nomes in mesa1.consumo">{{ nomes.nome }}</li></ul>
-							<p>{{ quantidade }}</p><ul><li v-for="quantidades in mesa1.consumo">{{ quantidades.quant }}</li></ul>
-							<p>{{ vlrUnit }}</p><ul><li v-for="valores in mesa1.consumo">{{ valores.valor }}</li></ul>
-							<p>{{ vlrParcial }}&nbsp;<input type="number" @blur="teste($event.target.value)"></p>
-							<p>{{ vlrTotal }}&nbsp;<input type="number" readonly v-model="vlrConta"></p><hr/>
+        	template: 	`<div class="mesa">
+        					<div class="mesa-content"><p>{{ produtos }}</p><ul><li v-for="nomes in mesa1.consumo">{{ nomes.nome }}</li></ul></div>
+							<div class="mesa-content"><p>{{ quantidade }}</p><ul><li v-for="quantidades in mesa1.consumo">{{ quantidades.quant }}</li></ul></div>
+							<div class="mesa-content"><p>{{ vlrUnit }}</p><ul><li v-for="valores in mesa1.consumo">{{ valores.valor.toFixed(2) }}</li></ul></div>
+							<div class="mesa-content"><p>{{ vlrParcial }}</p><p>{{ valor_Parcial }}</p>
+							<p>{{ desconto }} &nbsp; <input type="number" v-model="total" @keyup="total" @focus="selecao"></p>
+							<p>{{ vlrTotal }} &nbsp; {{ valor_Parcial - total }}</p><div>
 						</div>`,
 			
 			data: () => {
@@ -125,7 +141,7 @@
 			},
 
 			computed: {
-				vlrConta: () => {
+				valor_Parcial: () => {
 					let valor1 = mesa1.consumo[0].valor;
 					let valor2 = mesa1.consumo[1].valor; 
 					let valor3 = mesa1.consumo[2].valor;
@@ -140,20 +156,17 @@
 
 					let valorTotal= (total1 + total2 + total3).toFixed(2);
 
-			    	return valorTotal;
+			    	return valorTotal ;
 			  	}
 			},
 
-			methods: {
-				teste: (valor) => {
-
-			  		let valortotal = valorTotal; 
-
-			  		console.log(valortotal -  valor);
-
-			  		
-			  	}
-			}
+			 methods: {
+    			selecao: function(event) {
+      				setTimeout(function() {
+        				event.target.select()
+      				}, 0)
+    			}
+  			}
 
         })
 
@@ -239,17 +252,13 @@
 				tituloApp: 'Acompanhamento de mesas',
 				escolhaMesa: 'Escolher a mesa',
 				opcoes: ['Mesas', '1', '2', '3'],
-				numMesa: 'Mesas',
-				teste: 0
-			},
-
-			methods: {
-				 
+				numMesa: 'Mesas'
 			}	
 		})
 	
 
-	</script>
+	</script>   <!-- methods são chamados por eventos js ex: @click, @blur... ="função()" -->  <!-- computed são chamados em v-model="função" -->
+				<!-- componentes suportando v-model -->
 	
 </body>
 </html>
