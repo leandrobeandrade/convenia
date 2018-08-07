@@ -7,43 +7,52 @@
 <body>
 
 	<style>
-		body{margin: 0;padding: 0;max-width: 100%;}
-		h1{text-align: center;}
+		body{margin: 0;padding: 0;max-width: 100%;height: 100%; background-image: url(croissants.jpg);}
+		#titulo{width:400px;height: auto;margin-left: 35%;padding: 10px;background-color: #000;color: #fff;border-radius: 2px;text-align: center;opacity: 0.5}
 		*:focus{outline: none;}
-		select{width: 150px;height: 35px;border-radius: 4px;background-color: #fff;cursor: pointer;}
-		.mesa{width: 100%;display: flex;flex-direction: row; flex-wrap: wrap;justify-content: space-between;align-items: baseline;}
+		#selecao-mesa{width: 20%;padding: 10px;background-color: #21618C;opacity: 0.5;border-radius: 2px;}
+		h3{color: #fff;}
+		select{width: 250px;height: 35px;background-color: #E9F7EF;color: #21618C;border: solid 1px #21618C;border-radius: 4px;cursor: pointer;}
+		#select{width: 100px;}
+		#sem-mesa{width: 30%;height: 0 auto;margin: 1% 0 0 65%;padding:10px;background-color: #21618C;opacity: 0.6;border-radius: 2px;text-align: center;}
+		#sem-mesa h1{color: #fff;}
+		.mesa{width: 100%;display: flex;flex-direction: row; flex-wrap: wrap;justify-content: space-between;align-items: baseline; background-color: #fff; opacity: 0.7}
 		.mesa-content{width: 25%;}
-		p{background-color: #000;color: #fff;padding: 20px;line-height: 35px;}		
+		.mesa-content #mesa-content-desconto{color: green;}
+		p{background-color: #000;color: #fff;padding: 20px;line-height: 35px; margin: 0 0 0 0}		
 		ul li{list-style: none;line-height: 35px;} 
 		input[type=checkbox]{width: 17px;height: 17px;}
 		input[type="checkbox"]:checked:before{background-color: red;}
 		input[type=number]{width: 60px;height: 25px;border: 1px solid #fff; border-radius: 2px}
+		#footer{width: 100%;height: 20px;text-align: center;opacity: 0.6}
+		a{color: #fff}
 
 	</style>
 
 	<div id="app">
-		
-		<div>	
-			<h1>{{ tituloApp }}</h1>
-		</div>
-		<hr>
-		<div id="selecao-mesa">
+		<header>
+			<div id="titulo">	
+				<h1>{{ tituloApp }}</h1>
+			</div>
 
-			<h3>{{ escolhaMesa }}
-				<select name="select" id="select" v-model="numMesa">
-					<option v-for="opcao in opcoes">{{ opcao }}</option>
-				</select>
-			</h3>
+			<div id="selecao-mesa">
+				<h3>{{ escolhaMesa }}
+					<select name="select" id="select" v-model="numMesa">
+						<option v-for="opcao in opcoes">{{ opcao }}</option>
+					</select>
+				</h3>
+			</div>
+		</header>
 
-		</div>
 		<div id="mostra-mesa">
-
+			<sem-mesa v-if="numMesa == 0"></sem-mesa>
 			<mesa1 v-if="numMesa == 1"></mesa1>
 			<mesa2 v-if="numMesa == 2"></mesa2>
 			<mesa3 v-if="numMesa == 3"></mesa3>
-
 		</div>
-
+		<div id="footer">
+			<rodape></rodape>
+		</div>			
 	</div>
 
 
@@ -52,12 +61,13 @@
 
 	<script>
 		
-		let produtos = 'Produtos';
-		let quantidade = 'Quantidade';
-		let vlrUnit = 'Valor unitário';
-		let vlrParcial = 'Valor Parcial'
-		let desconto = 'Valor de desconto'
-		let vlrTotal = 'Valor Total';
+		let jumbotron = 'Selecione uma mesa para ver seu consumo e descontar um valor caso pago separadamente.'
+		let produtos = 'PRODUTOS';
+		let quantidade = 'QUANTIDADE';
+		let vlrUnit = 'VALOR UNITÁRIO';
+		let vlrParcial = 'VALOR PARCIAL'
+		let desconto = 'VALOR DE DESCONTO'
+		let vlrTotal = 'VALOR TOTAL';
 		let numMesa = '';
 		let mostrarTotal = 'Descontar valor separadamente';
 
@@ -128,15 +138,22 @@
 			total: 0
 		}
 
+		Vue.component('sem-mesa', {
+			template: 	`<div id="sem-mesa">
+							<h1>{{ jumbotron }}</h1>
+						</div>`  
+		})
+
         Vue.component('mesa1',{
         	template: 	`<div class="mesa">
         					<div class="mesa-content"><p>{{ produtos }}</p><ul><li v-for="nomes in mesa1.consumo">{{ nomes.nome }}</li></ul></div>
 							<div class="mesa-content"><p>{{ quantidade }}</p><ul><li v-for="quantidades in mesa1.consumo">{{ quantidades.quant }}</li></ul></div>
 							<div class="mesa-content"><p>{{ vlrUnit }}</p><ul><li v-for="valores in mesa1.consumo">{{ valores.valor.toFixed(2) }}</li></ul></div>
 							<div class="mesa-content"><p>{{ vlrParcial }}</p><p>{{ valor_Parcial }}</p>
-							<p><input type="checkbox" id="check" v-model="mostrar"><label for="check" v-model="mostrar"> &nbsp; {{ mostrarTotal }}</label></p>
-							<p v-if="mostrar">{{ desconto }} &nbsp; <input v-model.number="total" @keyup="total" @focus="selecao"></p>
-							<p v-if="mostrar">{{ vlrTotal }} &nbsp; {{ valor_Parcial - total }}</p><div>
+								<div id="mesa-content-desconto"><p><input type="checkbox" id="check" v-model="mostrar"><label for="check" v-model="mostrar"> &nbsp; {{ mostrarTotal }}</label></p>
+								<p v-if="mostrar">{{ desconto }} &nbsp; <input v-model.number="total" @keyup="total" @focus="selecao"></p>
+								<p v-if="mostrar">{{ vlrTotal }} &nbsp; {{ valor_Parcial - total }}</p><div>
+							</div>
 						</div>`,
 			
 			data: () => {
@@ -247,6 +264,12 @@
 
         })
 
+        Vue.component('rodape',{
+        	template: 	`<div id="rodape">
+        					<p>Todos os direitos resevados &#169; - Desenvolvido por <a href="https://www.convenia.com.br">Convenia<a/></p>
+        				</div>`
+        })
+
 		
 		let app = new Vue({
 
@@ -254,8 +277,8 @@
 			data: {
 				tituloApp: 'Acompanhamento de mesas',
 				escolhaMesa: 'Escolher a mesa',
-				opcoes: ['Mesas', '1', '2', '3'],
-				numMesa: 'Mesas'
+				opcoes: ['', '1', '2', '3'],
+				numMesa: '0'
 			}	
 		})
 	
