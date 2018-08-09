@@ -7,7 +7,7 @@
 <body>
 
 	<style>
-		body{margin: 0;padding: 0;max-width: 100%;height: 100%; background-image: url(croissants.jpg);}
+		body{margin: 0;padding: 0;width: 100%; background-image: url(croissants.jpg);}
 		#titulo{width:400px;height: auto;margin-left: 35%;padding: 10px;background-color: #000;color: #fff;border-radius: 2px;text-align: center;opacity: 0.5}
 		*:focus{outline: none;}
 		#selecao-mesa{width: 20%;padding: 10px;background-color: #21618C;opacity: 0.5;border-radius: 2px;}
@@ -24,7 +24,7 @@
 		input[type=checkbox]{width: 17px;height: 17px;}
 		input[type="checkbox"]:checked:before{background-color: red;}
 		input[type=number]{width: 60px;height: 25px;border: 1px solid #fff; border-radius: 2px}
-		#footer{position:fixed; bottom: 50px; width: 100%;height: 20px;text-align: center;opacity: 0.6}
+		#footer{position: fixed;bottom: 50px; width: 100%;height: 20px;text-align: center;opacity: 0.6}
 		a{color: #fff}
 
 		@media screen and (max-width: 992px) {
@@ -57,9 +57,10 @@
 			<mesa2 v-if="numMesa == 2"></mesa2>
 			<mesa3 v-if="numMesa == 3"></mesa3>
 		</div>
-		<div id="footer">
+
+		<!--div id="footer">
 			<rodape></rodape>
-		</div>			
+		</div-->			
 	</div>
 
 
@@ -120,7 +121,8 @@
 				}
 			],
 			numMesa: 2,
-			total: 0
+			total: 0,
+			mostrar: false
 		};
 
 		let mesa3 = {
@@ -142,7 +144,8 @@
 				}
 			],
 			numMesa: 3,
-			total: 0
+			total: 0,
+			mostrar: false
 		}
 
 		Vue.component('sem-mesa', {
@@ -158,7 +161,10 @@
 							<div class="mesa-content"><p>{{ vlrUnit }}</p><ul><li v-for="valores in mesa1.consumo">{{ valores.valor.toFixed(2) }}</li></ul></div>
 							<div class="mesa-content"><p>{{ vlrParcial }}</p><p>{{ valor_Parcial }}</p>
 								<div id="mesa-content-desconto"><p><input type="checkbox" id="check" v-model="mostrar"><label for="check" v-model="mostrar"> &nbsp; {{ mostrarTotal }}</label></p>
-								<p v-if="mostrar">{{ desconto }} &nbsp; <input v-model.number="total" @keyup="total" @focus="selecao"></p>
+								<p v-if="mostrar">{{ desconto }} &nbsp; <input type="number" @keyup.enter="descontar" @focus="selecao"></p>
+
+								<p v-if="mostrar">{{ total }}</p>
+
 								<p v-if="mostrar">{{ vlrTotal }} &nbsp; {{ valor_Parcial - total }}</p><div>
 							</div>
 						</div>`,
@@ -181,28 +187,39 @@
 					let total2 = valor2 * quant2;
 					let total3 = valor3 * quant3;
 
-					let valorTotal= (total1 + total2 + total3).toFixed(2);
+					let valorTotal= (total1 + total2 + total3);
 
-			    	return valorTotal ;
+			    	return valorTotal.toFixed(2) ;
 			  	}
 			},
 
 			methods: {
-    			selecao: function(event) {
-      				setTimeout(function() {
+    			selecao: (event) => {
+      				setTimeout (() => {
         				event.target.select()
       				}, 0)
+    			},
+    			descontar: (event) => {
+    				mesa1.total += parseInt(event.target.value);
+    				event.target.value = '';
     			}
   			}
 
         })
 
         Vue.component('mesa2',{
-        	template: 	`<div><p>{{ produtos }}</p><ul><li v-for="nomes in mesa2.consumo">{{ nomes.nome }}</li></ul>
-							<p>{{ quantidade }}</p><ul><li v-for="quantidades in mesa2.consumo">{{ quantidades.quant }}</li></ul>
-							<p>{{ vlrUnit }}</p><ul><li v-for="valores in mesa2.consumo">{{ valores.valor }}</li></ul>
-							<p>{{ vlrParcial }}:<input type="number" v-model="vlrParcialConta"></p>
-							<p>{{ vlrTotal }}:<input type="number" readonly v-model="vlrConta"></p><hr />
+        	template: 	`<div class="mesa">
+        					<div class="mesa-content"><p>{{ produtos }}</p><ul><li v-for="nomes in mesa2.consumo">{{ nomes.nome }}</li></ul></div>
+							<div class="mesa-content"><p>{{ quantidade }}</p><ul><li v-for="quantidades in mesa2.consumo">{{ quantidades.quant }}</li></ul></div>
+							<div class="mesa-content"><p>{{ vlrUnit }}</p><ul><li v-for="valores in mesa2.consumo">{{ valores.valor.toFixed(2) }}</li></ul></div>
+							<div class="mesa-content"><p>{{ vlrParcial }}</p><p>{{ valor_Parcial }}</p>
+								<div id="mesa-content-desconto"><p><input type="checkbox" id="check" v-model="mostrar"><label for="check" v-model="mostrar"> &nbsp; {{ mostrarTotal }}</label></p>
+								<p v-if="mostrar">{{ desconto }} &nbsp; <input type="number" @keyup.enter="descontar" @focus="selecao"></p>
+
+								<p v-if="mostrar">{{ total }}</p>
+
+								<p v-if="mostrar">{{ vlrTotal }} &nbsp; {{ valor_Parcial - total }}</p><div>
+							</div>
 						</div>`,
 			
 			data: () => {
@@ -210,7 +227,7 @@
 			},
 
 			computed: {
-				vlrConta: () => {
+				valor_Parcial: () => {
 					let valor1 = mesa2.consumo[0].valor;
 					let valor2 = mesa2.consumo[1].valor; 
 					let valor3 = mesa2.consumo[2].valor;
@@ -225,23 +242,37 @@
 
 					let valorTotal = total1 + total2 + total3;
 
-			    	return valorTotal;
-			  	},
-			  	vlrParcialConta: () => {
-			  		let valorParcial = 10; 
+			    	return valorTotal.toFixed(2);
+			  	}
+			},
 
-			  		return valorParcial - this.valorTotal;
-			  	} 
-			}
+			methods: {
+    			selecao: (event) => {
+      				setTimeout (() => {
+        				event.target.select()
+      				}, 0)
+    			},
+    			descontar: (event) => {
+    				mesa2.total += parseInt(event.target.value);
+    				event.target.value = '';
+    			}
+  			}
 
         })
 
         Vue.component('mesa3',{
-        	template: 	`<div><p>{{ produtos }}</p><ul><li v-for="nomes in mesa3.consumo">{{ nomes.nome }}</li></ul>
-							<p>{{ quantidade }}</p><ul><li v-for="quantidades in mesa3.consumo">{{ quantidades.quant }}</li></ul>
-							<p>{{ vlrUnit }}</p><ul><li v-for="valores in mesa3.consumo">{{ valores.valor }}</li></ul>
-							<p>{{ vlrParcial }} &nbsp; <input type="text" v-model=vlrConta></p>
-							<p>{{ vlrTotal }} &nbsp; <input type="number" readonly v-model="vlrConta"></p><hr />
+        	template: 	`<div class="mesa">
+        					<div class="mesa-content"><p>{{ produtos }}</p><ul><li v-for="nomes in mesa3.consumo">{{ nomes.nome }}</li></ul></div>
+							<div class="mesa-content"><p>{{ quantidade }}</p><ul><li v-for="quantidades in mesa3.consumo">{{ quantidades.quant }}</li></ul></div>
+							<div class="mesa-content"><p>{{ vlrUnit }}</p><ul><li v-for="valores in mesa3.consumo">{{ valores.valor.toFixed(2) }}</li></ul></div>
+							<div class="mesa-content"><p>{{ vlrParcial }}</p><p>{{ valor_Parcial }}</p>
+								<div id="mesa-content-desconto"><p><input type="checkbox" id="check" v-model="mostrar"><label for="check" v-model="mostrar"> &nbsp; {{ mostrarTotal }}</label></p>
+								<p v-if="mostrar">{{ desconto }} &nbsp; <input type="number" @keyup.enter="descontar" @focus="selecao"></p>
+
+								<p v-if="mostrar">{{ total }}</p>
+
+								<p v-if="mostrar">{{ vlrTotal }} &nbsp; {{ valor_Parcial - total }}</p><div>
+							</div>
 						</div>`,
 			
 			data: () => {
@@ -249,7 +280,7 @@
 			},
 
 			computed: {
-				vlrConta: () => {
+				valor_Parcial: () => {
 					let valor1 = mesa3.consumo[0].valor;
 					let valor2 = mesa3.consumo[1].valor; 
 					let valor3 = mesa3.consumo[2].valor;
@@ -264,10 +295,21 @@
 
 					let valorTotal = total1 + total2 + total3;
 
-			    	return valorTotal;
-			  	}
-			 
-			}
+			    	return valorTotal.toFixed(2);
+			  	}	 
+			},
+
+			methods: {
+    			selecao: (event) => {
+      				setTimeout (() => {
+        				event.target.select()
+      				}, 0)
+    			},
+    			descontar: (event) => {
+    				mesa3.total += parseInt(event.target.value);
+    				event.target.value = '';
+    			}
+  			}
 
         })
 
@@ -292,6 +334,7 @@
 
 	</script>   <!-- methods são chamados por eventos js ex: @click, @blur... ="função()" -->  <!-- computed são chamados em v-model="função" -->
 				<!-- componentes suportando v-model -->
+				<!-- dynamic & async components -->
 	
 </body>
 </html>
