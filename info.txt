@@ -1,0 +1,22 @@
+Teste front-end da Convenia
+
+
+## Objetivo
+A divisão de contas em restaurantes costuma ser trabalhosa para o garçom, e tem o potencial de gerar confusões.
+O seu objetivo é criar um webapp para facilitar a vida desse garçom.
+
+## Requisitos
+- O garçom pode selecionar a mesa para gerar a conta de cobrança
+- Ao selecionar a mesa, é exibida uma lista dos produtos consumidos, os respectivos preços e o valor total a ser pago
+- O garçom pode registrar os pagamentos individuais referentes à mesa, caso alguém queira sair antes
+- Devem ser exibidos os pagamentos parciais e o quanto falta para completar o valor total da mesa
+
+## Importante
+- Clareza e organização do código
+- Não é necessária implementação de backend
+- As mesas e produtos não precisam ser de fato registrados, podem ser dados mockados
+- É recomendado o uso de Vue.js e Vuex, e o uso de algum pré-compilador de CSS (SASS, Stylus etc.). Mas serão aceitos testes em qualquer stack
+- O webapp deve ser responsivo
+- Não é permitida a utilização de frameworks para o design (bootstrap, materialize, foundation etc.)
+- Uso de alguma metodologia para organizar seu CSS (RSCSS, BEM etc.)
+Divirta-se, seja criativo e sinta-se à vontade para tirar dúvidas.

@@ -1,0 +1,67 @@
+/* CORES */
+@branco: #fff;
+@preto: #000;
+@azul: #21618C;
+@verde: #58D68D;
+
+/* PROPRIEDADES */
+@margem: margin;
+@cor: color;
+@cor-de-fundo: background-color;
+@borda: border;
+@largura: width;
+@altura: height;
+@preenchimento: padding;
+@opacidade: opacity;
+
+
+body{@{margem}: 0;@{preenchimento}: 0;@{largura}: 100%; background-image: url(../imgs/croissants.jpg);}
+
+/*- TELA INICIAL -*/
+#titulo{@{largura}:400px;@{altura}: auto;@{margem}-left: 35%;@{preenchimento}: 10px;@{cor-de-fundo}: @preto;@{cor}: @branco;@{borda}-radius: 2px;text-align: center;@{opacidade}: 0.5;}
+*:focus{outline: none;}
+#selecao-mesa{@{largura}: 300px;@{preenchimento}: 10px;@{cor-de-fundo}: @azul;@{opacidade}: 0.5;@{borda}-radius: 2px;}
+h3{@{cor}: @branco;}
+select{@{largura}: 250px;@{altura}: 35px;@{cor-de-fundo}: #E9F7EF;@{borda}: solid 1px @azul;@{borda}-radius: 4px;cursor: pointer;}
+#select{@{largura}: 100px;}
+#sem-mesa{@{largura}: 30%;@{altura}: 0 auto;@{margem}: 1% 0 0 65%;@{preenchimento}:10px;@{cor-de-fundo}: @azul;@{opacidade}: 0.6;@{borda}-radius: 2px;text-align: center;}
+#sem-mesa h1{@{cor}: @branco;}
+
+/*- CONTEÚDO MESAS -*/
+.mesa {@{margem}-top: 5px;@{largura}: 100%;display: flex;flex-direction: row; flex-wrap: wrap;justify-content: space-between;align-items: baseline;@{cor-de-fundo}: @branco; @{opacidade}: 0.7;}
+.mesa-content{@{largura}: 25%;}
+.mesa-content #mesa-content-desconto{@{cor}: green;}
+p{@{cor-de-fundo}: @preto;@{cor}: @branco;@{preenchimento}: 20px;line-@{altura}: 35px; @{margem}: 0 0 0 0;}		
+ul li{list-style: none;line-@{altura}: 35px;} 
+input[type=checkbox]{@{largura}: 17px;@{altura}: 17px;cursor: pointer;}
+#label-check{cursor: pointer;}
+input[type=number]{@{largura}: 60px;@{altura}: 25px;@{borda}: 1px solid @branco; @{borda}-radius: 2px;}
+.mesa-content-totais{@{cor-de-fundo}: @verde;@{cor}: @preto;font-weight: bold;}
+span{text-decoration: underline;}
+.fas{display: none;@{margem}-top: 10px;}
+.fade-enter, .fade-leave-to{opacity: 0;}
+
+/*- RODAPÉ -*/
+#footer{position: absolute; bottom: 55px; @{largura}: 100%;@{altura}: 20px;text-align: center;@{opacidade}: 0.6;}
+a{@{cor}: @branco;}
+
+/*-- MEDIA QUERIES --*/
+@media screen and (max-width: 992px) {
+	#titulo{@{largura}: 250px; font-size: 10px;}
+	#selecao-mesa{@{largura}: 30%;@{margem}-top: 20px;}
+	#sem-mesa{@{largura}: 0 auto;@{margem}: 10% 0 0 60%;}
+	.mesa{display: flex;flex-direction: column;}
+	.mesa-content{@{largura}: 100%;}
+	.fas{display: flex;@{cor}: @branco;float: right;cursor: pointer;}
+	.fade-enter-active, .fade-leave-active{transition: opacity .5s;}
+}
+@media screen and (max-width: 600px) {
+	#titulo{@{largura}: 120px; font-size: 7px;}
+	#select{@{largura}: 60px;}
+	#selecao-mesa{@{largura}: 30%;@{margem}-top: 20px;}
+	#sem-mesa{@{largura}: 0 auto;@{margem}: 15% 0 0 60%;}
+	.mesa{display: flex;flex-direction: column;}
+	.mesa-content{@{largura}: 100%;}
+	#jumb{font-size: 15px;}
+	.fas{display: flex;@{cor}: @branco;float: right;cursor: pointer;}
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>TESTE CONVENIA</title>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+	<link rel="icon" href="assets/imgs/favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" type="text/less" href="assets/css/main.less">
+</head>
+
+<body>
+
+	<div id="app">
+		
+		<div>
+			<topo></topo>
+
+			<div id="selecao-mesa">
+				<h3>{{ escolhaMesa }}
+					<select name="select" id="select" v-model="numMesa">
+						<option v-for="opcao in opcoes">{{ opcao }}</option>
+					</select>
+				</h3>
+			</div>
+		</div>
+
+		<div id="mostra-mesa">
+			<sem-mesa v-if="numMesa == 0"></sem-mesa>
+			<mesa1 v-if="numMesa == 1"></mesa1>
+			<mesa2 v-if="numMesa == 2"></mesa2>
+			<mesa3 v-if="numMesa == 3"></mesa3>
+		</div>
+
+		<div id="footer">
+			<rodape v-if="numMesa == 0"></rodape>
+		</div>
+
+	</div>
+
+
+	<!-- production version, optimized for size and speed -->
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script src="assets/js/components.js"></script>
+	<script src="assets/js/dados.js"></script>
+	
+	<!-- compiler less -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.0.0/less.min.js"></script>
+	
+</body>
+</html>
