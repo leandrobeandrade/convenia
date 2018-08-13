@@ -1,3 +1,6 @@
 # App Vue.js - Convenia
 
-Teste para a empresa Convenia
+- Desenvolvimento de webapp para divisão de contas em um restaurante.
+
+## DESENVOLIMENTO:
+
