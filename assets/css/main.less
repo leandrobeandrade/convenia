@@ -39,7 +39,6 @@ input[type=number]{@{largura}: 60px;@{altura}: 25px;@{borda}: 1px solid @branco;
 .mesa-content-totais{@{cor-de-fundo}: @verde;@{cor}: @preto;font-weight: bold;}
 span{text-decoration: underline;}
 .fas{display: none;@{margem}-top: 10px;}
-.fade-enter, .fade-leave-to{opacity: 0;}
 
 /*- RODAPÉ -*/
 #footer{position: absolute; bottom: 55px; @{largura}: 100%;@{altura}: 20px;text-align: center;@{opacidade}: 0.6;}
@@ -54,6 +53,7 @@ a{@{cor}: @branco;}
 	.mesa-content{@{largura}: 100%;}
 	.fas{display: flex;@{cor}: @branco;float: right;cursor: pointer;}
 	.fade-enter-active, .fade-leave-active{transition: opacity .7s;}
+	.fade-enter, .fade-leave-to{@{opacidade}: 0;}
 }
 @media screen and (max-width: 600px) {
 	#titulo{@{largura}: 120px; font-size: 7px;}
@@ -65,4 +65,5 @@ a{@{cor}: @branco;}
 	#jumb{font-size: 15px;}
 	.fas{display: flex;@{cor}: @branco;float: right;cursor: pointer;}
 	.fade-enter-active, .fade-leave-active{transition: opacity .7s;}
+	.fade-enter, .fade-leave-to{@{opacidade}: 0;}
 }
