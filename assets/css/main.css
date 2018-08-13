@@ -21,7 +21,6 @@ a{color: #fff;}
 span{text-decoration: underline;}
 #footer{position: absolute; bottom: 55px; width: 100%;height: 20px;text-align: center;opacity: 0.6;}
 .fas{display: none;margin-top: 10px;}
-.fade-enter, .fade-leave-to{opacity: 0;}
 
 @media screen and (max-width: 992px) {
 	#titulo{width: 250px; font-size: 10px;}
@@ -31,6 +30,7 @@ span{text-decoration: underline;}
 	.mesa-content{width: 100%;}
 	.fas{display: flex;color: #fff;float: right;cursor: pointer;}
 	.fade-enter-active, .fade-leave-active{transition: opacity .7s;}
+	.fade-enter, .fade-leave-to{opacity: 0;}
 }
 @media screen and (max-width: 600px) {
 	#titulo{width: 120px; font-size: 7px;}
@@ -42,4 +42,5 @@ span{text-decoration: underline;}
 	#jumb{font-size: 15px;}
 	.fas{display: flex;color: #fff;float: right;cursor: pointer;}
 	.fade-enter-active, .fade-leave-active{transition: opacity .7s;}
+	.fade-enter, .fade-leave-to{opacity: 0;}
 }
