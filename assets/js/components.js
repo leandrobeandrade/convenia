@@ -23,14 +23,14 @@ Vue.component('sem-mesa', {
 Vue.component('mesa1', {
 	template: 	
 	`<div class="mesa">
-		<div class="mesa-content"><p>{{ produtos }} <i class="fas fa-arrows-alt-v" v-on:click="dados = !dados"></i></p>
-			<ul v-show="dados"><li v-for="nomes in mesa1.consumo">{{ nomes.nome }}</li></ul>
+		<div class="mesa-content"><p>{{ produtos }}<i class="fas fa-arrows-alt-v" v-on:click="dados = !dados"></i></p>
+			<transition name="fade"><ul v-show="dados"><li v-for="nomes in mesa1.consumo">{{ nomes.nome }}</li></ul></transition>
 		</div>
 		<div class="mesa-content"><p>{{ quantidade }}</p>
-			<ul v-show="dados"><li v-for="quantidades in mesa1.consumo">{{ quantidades.quant }}</li></ul>
+			<transition name="fade"><ul v-show="dados"><li v-for="quantidades in mesa1.consumo">{{ quantidades.quant }}</li></ul></transition>
 		</div>
 		<div class="mesa-content"><p>{{ vlrUnit }}</p>
-			<ul v-show="dados"><li v-for="valores in mesa1.consumo">{{ valores.valor.toFixed(2) }}</li></ul>
+			<transition name="fade"><ul v-show="dados"><li v-for="valores in mesa1.consumo">{{ valores.valor.toFixed(2) }}</li></ul></transition>
 		</div>
 		<div class="mesa-content"><p>{{ vlrParcial }}</p><p>{{ valor_Parcial }}</p>
 			<div id="mesa-content-desconto">
@@ -85,14 +85,14 @@ Vue.component('mesa1', {
 Vue.component('mesa2', {
 	template: 	
 	`<div class="mesa">
-		<div class="mesa-content"><p>{{ produtos }} <i class="fas fa-arrows-alt-v" v-on:click="dados = !dados"></i></p>
-			<ul v-show="dados"><li v-for="nomes in mesa2.consumo">{{ nomes.nome }}</li></ul>
+		<div class="mesa-content"><p>{{ produtos }}<i class="fas fa-arrows-alt-v" v-on:click="dados = !dados"></i></p>
+			<transition name="fade"><ul v-show="dados"><li v-for="nomes in mesa2.consumo">{{ nomes.nome }}</li></ul></transition>
 		</div>
 		<div class="mesa-content"><p>{{ quantidade }}</p>
-			<ul v-show="dados"><li v-for="quantidades in mesa2.consumo">{{ quantidades.quant }}</li></ul>
+			<transition name="fade"><ul v-show="dados"><li v-for="quantidades in mesa2.consumo">{{ quantidades.quant }}</li></ul></transition>
 		</div>
 		<div class="mesa-content"><p>{{ vlrUnit }}</p>
-			<ul v-show="dados"><li v-for="valores in mesa2.consumo">{{ valores.valor.toFixed(2) }}</li></ul>
+			<transition name="fade"><ul v-show="dados"><li v-for="valores in mesa2.consumo">{{ valores.valor.toFixed(2) }}</li></ul></transition>
 		</div>
 		<div class="mesa-content"><p>{{ vlrParcial }}</p><p>{{ valor_Parcial }}</p>
 			<div id="mesa-content-desconto">
@@ -135,7 +135,7 @@ Vue.component('mesa2', {
 			}, 0)
 		},
 		descontar: (event) => {
-			mesa2.totalDesc += parseInt(event.target.value);
+			mesa2.totalDesc += parseFloat(event.target.value);
 			event.target.value = '';
 		}
 	}
@@ -144,14 +144,14 @@ Vue.component('mesa2', {
 Vue.component('mesa3', {
 	template: 	
 	`<div class="mesa">
-		<div class="mesa-content"><p>{{ produtos }}</p> <i class="fas fa-arrows-alt-v" v-on:click="dados = !dados"></i>
-			<ul v-show="dados"><li v-for="nomes in mesa3.consumo">{{ nomes.nome }}</li></ul>
+		<div class="mesa-content"><p>{{ produtos }}<i class="fas fa-arrows-alt-v" v-on:click="dados = !dados"></i></p> 
+			<transition name="fade"><ul v-show="dados"><li v-for="nomes in mesa3.consumo">{{ nomes.nome }}</li></ul></transition>
 		</div>
 		<div class="mesa-content"><p>{{ quantidade }}</p>
-			<ul v-show="dados"><li v-for="quantidades in mesa3.consumo">{{ quantidades.quant }}</li></ul>
+			<transition name="fade"><ul v-show="dados"><li v-for="quantidades in mesa3.consumo">{{ quantidades.quant }}</li></ul></transition>
 		</div>
 		<div class="mesa-content"><p>{{ vlrUnit }}</p>
-			<ul v-show="dados"><li v-for="valores in mesa3.consumo">{{ valores.valor.toFixed(2) }}</li></ul>
+			<transition name="fade"><ul v-show="dados"><li v-for="valores in mesa3.consumo">{{ valores.valor.toFixed(2) }}</li></ul></transition>
 		</div>
 		<div class="mesa-content"><p>{{ vlrParcial }}</p><p>{{ valor_Parcial }}</p>
 			<div id="mesa-content-desconto">
@@ -194,7 +194,7 @@ Vue.component('mesa3', {
 			}, 0)
 		},
 		descontar: (event) => {
-			mesa3.totalDesc += parseInt(event.target.value);
+			mesa3.totalDesc += parseFloat(event.target.value);
 			event.target.value = '';
 		}
 	}
