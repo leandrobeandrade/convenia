@@ -51,6 +51,7 @@ let mesa2 = {
 		}
 	],
 	totalDesc: 0,
+	dados: true,
 	mostrar: false
 }
 
@@ -74,5 +75,6 @@ let mesa3 = {
 		}
 	],
 	totalDesc: 0,
+	dados: true,
 	mostrar: false
 }
