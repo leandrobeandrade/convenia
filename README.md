@@ -6,7 +6,7 @@ Apenas clonar/baixar o projeto e rodá-lo normalmente em um navegador.
 
 ## Estrutura de arquivos:
 - **index.html** - página principal
-- **pasta assets** - pasta contendo os diretórios css, imgs e js
+- **assets** - pasta contendo os diretórios css, imgs e js
   - **css** - pasta onde se encontram os arquivos css com extensão *.css* e *.less*
   - **imgs** - pasta com imagens utilizadas.
   - **js** - pasta onde se encontram os arquivos *components.js* e *dados.js*
