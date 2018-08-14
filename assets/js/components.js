@@ -75,9 +75,6 @@ Vue.component('mesa1', {
 		descontar: (event) => {
 			mesa1.totalDesc += parseFloat(event.target.value);
 			event.target.value = '';
-		},
-		dados: () => {
-
 		}
 	}
 })
